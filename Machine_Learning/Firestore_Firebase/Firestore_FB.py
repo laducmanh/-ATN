@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/home/pi/DATN/Machine_Learning/Main')
 import firebase_admin
 import pandas as pd
 import variables

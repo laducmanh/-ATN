@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/home/pi/DATN/Machine_Learning/Main')
 import pandas as pd
 import numpy as np
 import time
@@ -71,7 +73,7 @@ def execute_predict():
     predictions_2 = model_lstm_2.predict(np.reshape(np.array((model_rf.predict(x_test_rs))),(-1,1))).squeeze()
     predictions_reshape_2 = np.reshape((predictions_2),(-1,1))
     predictions_2 = scaler.inverse_transform(predictions_reshape_2)
-    print(predictions_2)
+    #print(predictions_2)
 
     elapsed_time = time.time() - start_time
     #print("elapsed time: {:.2}".format(elapsed_time))
@@ -86,3 +88,4 @@ def execute_predict():
     print("r2:",r2)
     
     return predictions_2
+

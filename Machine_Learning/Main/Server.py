@@ -1,3 +1,8 @@
+import sys
+sys.path.append('../Dataset')
+sys.path.append('../Model')
+sys.path.append('../Realtime_Firebase')
+sys.path.append('../Firestore_Firebase')
 import socket
 import threading
 import datetime
