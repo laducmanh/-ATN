@@ -1,0 +1,5 @@
+LINK = '/home/pi/Raspberry_Pi/Project/Weather_HCM_2.csv'
+MODEL_RF = '/home/pi/Raspberry_Pi/Project/RFv3.h5'
+MODEL_RF_LSTM = '/home/pi/Raspberry_Pi/Project/RF_LSTMv2.h5'
+CERTIFICATE = '/home/pi/Raspberry_Pi/Project/raspberry-esp32-firebase-adminsdk-dd5v3-8b0d728a1f.json'
+DATABASE_URL = 'https://raspberry-esp32-default-rtdb.asia-southeast1.firebasedatabase.app'

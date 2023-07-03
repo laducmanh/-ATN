@@ -1,5 +1,6 @@
 import firebase_admin
 import pandas as pd
+import variables
 
 from firebase_admin import credentials
 from firebase_admin import firestore
@@ -8,7 +9,7 @@ def save_firestore(app):
     # Truy cập Firestore Database
     db = firestore.client(app=app)
 
-    df = pd.read_csv('/home/pi/Raspberry_Pi/Project/Weather_HCM.csv')
+    df = pd.read_csv(variables.LINK)
 
     #push last data to firebase
     last_row = df.tail(1)

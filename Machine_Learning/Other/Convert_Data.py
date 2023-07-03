@@ -6,7 +6,7 @@ import csv
 # Đường dẫn đến file chứa dữ liệu
 data_file = '/home/pi/Desktop/data.txt'
 
-start_date = datetime.datetime(2023, 6, 21, 0, 0)  # Ngày bắt đầu
+start_date = datetime.datetime(2023, 5, 1, 0, 0)  # Ngày bắt đầu
 time_step = datetime.timedelta(hours=1)  # Bước thời gian giữa các dữ liệu
 
 # Mở file để đọc dữ liệu
@@ -28,10 +28,10 @@ with open(output_file, 'w') as file:
             current_date += time_step
 
 # Đọc file CSV vào DataFrame
-df = pd.read_csv(output_file)
+#df = pd.read_csv(output_file)
 
 # Tạo số thập phân ngẫu nhiên cho giá trị nhiệt độ
-df['Temperature'] = df['Temperature'].apply(lambda x: round(float(x) + random.uniform(0, 1), 6))
+#df['Temperature'] = df['Temperature'].apply(lambda x: round(float(x) + random.uniform(0, 1), 6))
 
 # Lưu kết quả vào file b.csv
-df.to_csv(output_file, sep=',', index=False, header=False)
+#df.to_csv(output_file, sep=',', index=False, header=False)

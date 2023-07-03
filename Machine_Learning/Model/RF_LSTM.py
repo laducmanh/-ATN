@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import time
 import joblib
+import variables
 
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.ensemble import RandomForestRegressor
@@ -10,7 +11,7 @@ from keras.layers import Dense, Dropout, LSTM
 from sklearn.metrics import mean_absolute_error, r2_score, mean_squared_error, mean_absolute_percentage_error
 
 def execute_predict():
-    df = pd.read_csv('/home/pi/Raspberry_Pi/Project/Weather_HCM.csv')
+    df = pd.read_csv(variables.LINK)
 
     # Create a new dataframe with only the 'Close column 
     data = df.filter(['Temperature'])
@@ -18,7 +19,8 @@ def execute_predict():
     dataset = data.values
     # Get the number of rows to train the model on
     #training_data_len = int(np.ceil( len(dataset) * .9 ))
-    training_data_len = len(dataset) - 168
+    training_data_len = int(np.ceil( len(dataset) - 168 ))
+    training_data_len2 = int(np.ceil( len(dataset) ))
 
     # Scale the data
     scaler = MinMaxScaler(feature_range=(0,1))
@@ -26,7 +28,7 @@ def execute_predict():
 
     # Create the training data set 
     # Create the scaled training data set
-    train_data = scaled_data[0:int(training_data_len), :]
+    train_data = scaled_data[0:int(training_data_len2), :]
     # Split the data into x_train and y_train data sets
     x_train = []
     y_train = []
@@ -42,8 +44,6 @@ def execute_predict():
 
     # Reshape the data
     x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
-
-    test_data = scaled_data[training_data_len: , :] #48
 
     test_data = scaled_data[training_data_len - 48: , :]
 
@@ -63,18 +63,19 @@ def execute_predict():
     x_test_rs= x_test.reshape(x_test.shape[0], (x_test.shape[1]*x_test.shape[2]))
 
     #Load saved trained model
-    model_rf = joblib.load('/home/pi/Raspberry_Pi/Project/RF.h5')
-    model_lstm_2 = joblib.load('/home/pi/Raspberry_Pi/Project/RF_LSTM.h5')
+    model_rf = joblib.load(variables.MODEL_RF)
+    model_lstm_2 = joblib.load(variables.MODEL_RF_LSTM)
 
     start_time = time.time()
 
     predictions_2 = model_lstm_2.predict(np.reshape(np.array((model_rf.predict(x_test_rs))),(-1,1))).squeeze()
     predictions_reshape_2 = np.reshape((predictions_2),(-1,1))
     predictions_2 = scaler.inverse_transform(predictions_reshape_2)
+    print(predictions_2)
 
     elapsed_time = time.time() - start_time
-    print("elapsed time: {:.2}".format(elapsed_time))
-    print("elapsed time: {} seconds".format(elapsed_time))
+    #print("elapsed time: {:.2}".format(elapsed_time))
+    #print("elapsed time: {} seconds".format(elapsed_time))
 
     MAE = mean_absolute_error(y_test, predictions_2) #MAE 
     rmse=np.sqrt(mean_squared_error(y_test, predictions_2)) #rmse
