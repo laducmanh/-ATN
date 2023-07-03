@@ -1,6 +1,7 @@
 import socket
 import threading
 import datetime
+import variables
 import firebase_admin
 import CSV
 import RF_LSTM
@@ -9,9 +10,9 @@ import Firestore_FB
 
 from firebase_admin import credentials
 
-cred = credentials.Certificate('/home/pi/Raspberry_Pi/Project/raspberry-esp32-firebase-adminsdk-dd5v3-8b0d728a1f.json')
+cred = credentials.Certificate(variables.CERTIFICATE)
 app = firebase_admin.initialize_app(cred, {
-	'databaseURL': 'https://raspberry-esp32-default-rtdb.asia-southeast1.firebasedatabase.app'
+	'databaseURL': variables.DATABASE_URL
 	})
 
 HOST = '192.168.1.123'
